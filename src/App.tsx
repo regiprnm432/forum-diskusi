@@ -1,10 +1,10 @@
-import "./App.css";
-import { Button } from "./components/ui/button";
+import './App.css';
+import MainPage from './Pages/MainPage';
 
 function App() {
   return (
     <div>
-      <Button>Click me</Button>
+      <MainPage />
     </div>
   );
 }
