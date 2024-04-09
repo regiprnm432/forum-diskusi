@@ -55,7 +55,7 @@ const ThreadCard = ({
     <Link to={`/discussion/${threadId}`}>
       {" "}
       {/* Wrap content for redirection */}
-      <Card className="mb-5">
+      <Card className="mb-5 bg-[#F5F7F9]">
         {" "}
         <CardHeader className="py-4">
           <div className="flex items-center">
@@ -89,13 +89,14 @@ const ThreadCard = ({
                 <p>no tags</p>
               )}
             </div>
-            <div className="flex items-center text-[#676767]">
-              <FontAwesomeIcon icon={faComment} className="mr-2" />
-              <p>{commentCount} Balasan</p>
+            <div className="flex items-center mt-1 text-[#676767]">
+              <img src="src\assets\chat-bubble.svg" alt="chat-bubble" />
+              <p className="ml-2">{commentCount} Balasan</p>
             </div>
           </div>
         </CardFooter>
       </Card>
+
     </Link>
   );
 };

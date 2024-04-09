@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import "./App.css";
-import MainPage from "./Pages/MainPage";
 import Discussion from "./components/custom/Discussion";
 import ThreadList from "./components/custom/ThreadList";
 import { DiscussionProvider } from "./DiscussionContext";

@@ -23,6 +23,15 @@ interface ThreadProps {
     anonymous: boolean;
     verified: boolean;
     created_at: string;
+    comment_reply: {
+      id: number;
+      user_id: string;
+      author: string;
+      content: string;
+      anonymous: boolean;
+      verified: boolean;
+      created_at: string;
+    }[];
   }[];
   thread_tag: {
     tag: {
@@ -114,6 +123,7 @@ const Discussion = () => {
             anonymous={comment.anonymous}
             verified={comment.verified}
             created_at={comment.created_at}
+            comment_reply={comment.comment_reply}
           ></Comment>
         ))}
       </section>
