@@ -104,12 +104,9 @@ const Discussion = () => {
           <div className="pb-2">
             {discussionData.thread_tag.length > 0 ? (
               discussionData.thread_tag.map((tag) => (
-                <Button
-                  key={tag.tag.id}
-                  className="p-2 h-6 mr-2 bg-[#F9A682] text-[#B23E19]"
-                >
-                  {tag.tag.name}
-                </Button>
+                  <span key={tag.tag.id} className="text-xs font-medium rounded-md p-1 px-2 mr-2 bg-[#F9A682] text-[#B23E19]">
+                    {tag.tag.name}
+                  </span>
               ))
             ) : (
               <p>no tags</p>
