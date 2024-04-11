@@ -58,7 +58,6 @@ const Discussion = () => {
         (d: ThreadProps) => d.id == threadId
       );
       setDiscussionData(discussion);
-      console.log(discussion);
     };
 
     fetchData();
@@ -116,6 +115,7 @@ const Discussion = () => {
       <section className="px-4 pb-4">
         {discussionData.comment.map((comment) => (
           <Comment
+            key={comment.id}
             id={comment.id}
             user_id={comment.user_id}
             author={comment.author}

@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import CommentReply from "./CommentReply";
 import Upvote from "./Upvote";
 import { getAuthenticatedHttpClient } from "@/lib/getAuthenticatedUser";
+import { useState } from "react";
 
 interface CommentProps {
   id: number;
@@ -33,7 +34,30 @@ const Comment = ({
   created_at,
   comment_reply,
 }: CommentProps) => {
+  const [isVerified, setIsVerified] = useState(verified);
   const timeAgo = moment(created_at).fromNow();
+
+// TODO: move to dropdown component
+  const handleVerify = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/discussion/comment/${id}/verify`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({isAdmin: getAuthenticatedHttpClient().administrator}),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setIsVerified(data.verified);
+      console.log(data);
+    } catch (error) {
+      console.error("Error verifying comment:", error);
+    }
+  }
+
   return (
     <>
       <section className="py-4">
@@ -46,7 +70,7 @@ const Comment = ({
             <div className="text-base font-semibold text-black">
               {anonymous ? "*****" : author} •{" "}
               <span className="text-gray-600 font-light">{timeAgo}</span>
-              {verified && (
+              {isVerified && (
                 <span className="border border-[#38B0AB] text-xs rounded-2xl px-4 py-1 text-[#38B0AB] ml-2">
                   Verified
                 </span>
@@ -72,20 +96,20 @@ const Comment = ({
             <path
               d="M7.39296 16.0716L0.821533 17.3574L2.46439 13.5002V1.92878C2.46439 1.58778 2.63748 1.26076 2.94557 1.01964C3.25367 0.778525 3.67153 0.643066 4.10725 0.643066H20.5358C20.9715 0.643066 21.3894 0.778525 21.6975 1.01964C22.0055 1.26076 22.1787 1.58778 22.1787 1.92878V14.7859C22.1787 15.1269 22.0055 15.454 21.6975 15.6951C21.3894 15.9361 20.9715 16.0716 20.5358 16.0716H7.39296Z"
               stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M7.39307 6.42871H17.2502"
               stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M7.39307 10.2861H13.9645"
               stroke="black"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
           <p className="ml-2 font-medium">Balas</p>
@@ -95,6 +119,13 @@ const Comment = ({
           commentId={id}
           user_id={getAuthenticatedHttpClient().username}
         />
+
+        {/* TODO: pindahin ke component dropdown */}
+        <div>
+          <button onClick={handleVerify}>
+            verify
+          </button>
+        </div>
       </section>
 
       <hr />
@@ -102,6 +133,7 @@ const Comment = ({
       <section className="ml-4 px-4 pb-4">
         {comment_reply.map((comment) => (
           <CommentReply
+            key={comment.id}
             id={comment.id}
             user_id={comment.user_id}
             author={comment.author}
