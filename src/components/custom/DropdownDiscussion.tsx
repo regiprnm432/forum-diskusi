@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -10,6 +10,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { getAuthenticatedUser } from "@/lib/getAuthenticatedUser";
+import { ReportDialog } from "./ReportDialog";
 
 interface DropdownDiscussionProps {
   user_id: string;
@@ -25,6 +26,8 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
   const isAdmin = getAuthenticatedUser().administrator;
   const username = getAuthenticatedUser().username;
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  
   const handleVerify = async () => {
     try {
       const response = await fetch(
@@ -73,6 +76,10 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
       console.error("Error deleting comment:", error);
     }
   }
+
+  const handleReport = () => {
+    setIsDialogOpen(true);
+  };
 
   return (
     <DropdownMenu>
@@ -173,7 +180,8 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
           </Button>
         )}
         {user_id !== username && (
-          <Button variant="ghost">
+          <>
+          <Button variant="ghost" onClick={handleReport}>
             <DropdownMenuItem className="font-light text-lg">
               <svg
                 width="23"
@@ -192,6 +200,8 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
               <span className="ml-2">Laporkan</span>
             </DropdownMenuItem>
           </Button>
+          {isDialogOpen && <ReportDialog />}
+          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
@@ -199,3 +209,7 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
 };
 
 export default DropdownDiscussion;
+// function useState(arg0: boolean): [any, any] {
+//   throw new Error("Function not implemented.");
+// }
+
