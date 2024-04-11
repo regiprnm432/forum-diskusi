@@ -22,15 +22,6 @@ interface ThreadCardProps {
   anonymous: boolean;
   content: string;
   commentCount: number;
-  comment: {
-    id: number;
-    user_id: string;
-    author: string;
-    content: string;
-    anonymous: boolean;
-    verified: boolean;
-    created_at: string;
-  }[];
   thread_tag: {
     tag: {
       id: string;
@@ -46,7 +37,6 @@ const ThreadCard = ({
   title,
   anonymous,
   content,
-  comment,
   commentCount,
   thread_tag,
 }: ThreadCardProps) => {
