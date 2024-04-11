@@ -6,6 +6,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger
 } from "@/components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Label } from "@/components/ui/label"
@@ -14,6 +15,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 export function ReportDialog() {
   return (
     <Dialog>
+      <DialogTrigger>
+        <span>Laporkan</span>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
           <DialogTitle>Laporkan Masalah</DialogTitle>

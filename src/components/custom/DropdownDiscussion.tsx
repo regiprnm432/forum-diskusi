@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import { getAuthenticatedUser } from "@/lib/getAuthenticatedUser";
 import { ReportDialog } from "./ReportDialog";
 
+
 interface DropdownDiscussionProps {
   user_id: string;
   showVerifiy: boolean;
@@ -26,8 +27,6 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
   const isAdmin = getAuthenticatedUser().administrator;
   const username = getAuthenticatedUser().username;
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
   const handleVerify = async () => {
     try {
       const response = await fetch(
@@ -77,10 +76,7 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
     }
   }
 
-  const handleReport = () => {
-    setIsDialogOpen(true);
-  };
-
+    
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -135,6 +131,7 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
           </Button>
         )}
         {user_id === username && (
+          
           <Button variant="ghost" onClick={handleDelete}>
             <DropdownMenuItem className="font-light text-lg">
               <svg
@@ -180,8 +177,7 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
           </Button>
         )}
         {user_id !== username && (
-          <>
-          <Button variant="ghost" onClick={handleReport}>
+          <Button variant="ghost" >
             <DropdownMenuItem className="font-light text-lg">
               <svg
                 width="23"
@@ -197,11 +193,10 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
                   stroke-linejoin="round"
                 />
               </svg>
-              <span className="ml-2">Laporkan</span>
+              {/* <span className="ml-2">Laporkan</span> */}
+              <ReportDialog />
             </DropdownMenuItem>
           </Button>
-          {isDialogOpen && <ReportDialog />}
-          </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
@@ -209,7 +204,3 @@ const DropdownDiscussion = ({ user_id, showVerifiy, commentId, setIsVerified, is
 };
 
 export default DropdownDiscussion;
-// function useState(arg0: boolean): [any, any] {
-//   throw new Error("Function not implemented.");
-// }
-
