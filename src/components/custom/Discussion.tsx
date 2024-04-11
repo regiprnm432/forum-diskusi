@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { useDiscussion } from "@/DiscussionContext";
 import { Button } from "../ui/button";
 import Comment from "./Comment";
+import DropdownDiscussion from "./DropdownDiscussion";
 
 interface ThreadProps {
-  id: string;
+  id: number;
+  user_id: string;
   author: string;
   title: string;
   content: string;
@@ -67,7 +69,7 @@ const Discussion = () => {
 
   return (
     <div className="mb-5 text-left">
-      <section className="py-4 px-4">
+      <section className="py-4 px-4 flex justify-between">
         <div className="flex items-center">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
@@ -79,6 +81,14 @@ const Discussion = () => {
               <span className="text-gray-600 font-light">{timeAgo}</span>
             </div>
           </div>
+        </div>
+        <div>
+          <DropdownDiscussion
+            showVerifiy={false}
+            user_id={discussionData.user_id}
+            path=""
+            id={discussionData.id}
+          ></DropdownDiscussion>
         </div>
       </section>
 

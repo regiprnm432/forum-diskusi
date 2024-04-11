@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 interface Discussion {
-  id: string;
+  id: number;
   author: string;
   title: string;
   content: string;

@@ -2,8 +2,9 @@ import moment from "moment";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import CommentReply from "./CommentReply";
 import Upvote from "./Upvote";
-import { getAuthenticatedHttpClient } from "@/lib/getAuthenticatedUser";
+import { getAuthenticatedUser } from "@/lib/getAuthenticatedUser";
 import { useState } from "react";
+import DropdownDiscussion from "./DropdownDiscussion";
 
 interface CommentProps {
   id: number;
@@ -37,30 +38,10 @@ const Comment = ({
   const [isVerified, setIsVerified] = useState(verified);
   const timeAgo = moment(created_at).fromNow();
 
-// TODO: move to dropdown component
-  const handleVerify = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/discussion/comment/${id}/verify`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({isAdmin: getAuthenticatedHttpClient().administrator}),
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setIsVerified(data.verified);
-      console.log(data);
-    } catch (error) {
-      console.error("Error verifying comment:", error);
-    }
-  }
-
+  // TODO: move to dropdown component
   return (
     <>
-      <section className="py-4">
+      <section className="py-4 flex justify-between">
         <div className="flex items-center">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
@@ -77,6 +58,17 @@ const Comment = ({
               )}
             </div>
           </div>
+        </div>
+        <div>
+          <DropdownDiscussion
+            showVerifiy={true}
+            user_id={user_id}
+            commentId={id}
+            setIsVerified={setIsVerified}
+            isVerified={isVerified}
+            path="/comment"
+            id={id}
+          ></DropdownDiscussion>
         </div>
       </section>
 
@@ -115,22 +107,12 @@ const Comment = ({
           <p className="ml-2 font-medium">Balas</p>
         </div>
 
-        <Upvote
-          commentId={id}
-          user_id={getAuthenticatedHttpClient().username}
-        />
-
-        {/* TODO: pindahin ke component dropdown */}
-        <div>
-          <button onClick={handleVerify}>
-            verify
-          </button>
-        </div>
+        <Upvote commentId={id} user_id={getAuthenticatedUser().username} />
       </section>
 
       <hr />
 
-      <section className="ml-4 px-4 pb-4">
+      <section className="ml-8 pb-4">
         {comment_reply.map((comment) => (
           <CommentReply
             key={comment.id}

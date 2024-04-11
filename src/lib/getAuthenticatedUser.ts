@@ -7,11 +7,11 @@ interface UserAccount {
   name: string;
 }
 
-export function getAuthenticatedHttpClient() {
+export function getAuthenticatedUser() {
   const userAccountData: UserAccount = {
     email: "admin@gmail.com",
     userId: 4,
-    username: "admin",
+    username: "sendis",
     roles: [],
     administrator: true,
     name: "",
